@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ticket booking</title>
+<link rel="stylesheet" href="style.css">
+<script>
+// Defining a function to display error message
+function printError(elemId, hintMsg) {
+    document.getElementById(elemId).innerHTML = hintMsg;
+}
+
+// Defining a function to validate form 
+function validateForm() {
+    // Retrieving the values of form elements 
+    var name = document.contactForm.name.value;
+    var email = document.contactForm.email.value;
+    var mobile = document.contactForm.mobile.value;
+    var namee = document.contactForm.namee.value;
+    var city = document.contactForm.city.value;
+    var time = document.contactForm.time.value;
+    var ticket = document.contactForm.ticket.value;
+    var snaks= [];
+    var checkboxes = document.getElementsByName("movie[]");
+    for(var i=0; i < checkboxes.length; i++) {
+        if(checkboxes[i].checked) {
+            // Populate snaks array with selected values
+            snaks.push(checkboxes[i].value);
+        }
+    }
+    var payment= [];
+    var checkboxes = document.getElementsByName("payment[]");
+    for(var i=0; i < checkboxes.length; i++) {
+        if(checkboxes[i].checked) {
+            // Populate payment array with selected values
+            payment.push(checkboxes[i].value);
+        }
+    }
+    
+	// Defining error variables with a default value
+    var nameErr = emailErr=mobileErr=nameeErr=cityErr=timeErr=ticketErr=snaksErr=paymentErr = true;
+    
+    // Validate name
+    if(name == "") {
+        printError("nameErr", "Please enter your name");
+    } else {
+        var regex = /^[a-zA-Z\s]+$/;                
+        if(regex.test(name) === false) {
+            printError("nameErr", "Please enter a valid name");
+        } else {
+            printError("nameErr", "");
+            nameErr = false;
+        }
+    }
+    
+    // Validate email address
+    if(email == "") {
+        printError("emailErr", "Please enter your email address");
+    } else {
+        // Regular expression for basic email validation
+        var regex = /^\S+@\S+\.\S+$/;
+        if(regex.test(email) === false) {
+            printError("emailErr", "Please enter a valid email address");
+        } else{
+            printError("emailErr", "");
+            emailErr = false;
+        }
+    }
+    
+    // Validate mobile number
+    if(mobile == "") {
+        printError("mobileErr", "Please enter your mobile number");
+    } else {
+        var regex = /^[1-9]\d{9}$/;
+        if(regex.test(mobile) === false) {
+            printError("mobileErr", "Please enter a valid 10 digit mobile number");
+        } else{
+            printError("mobileErr", "");
+            mobileErr = false;
+        }
+    }
+     // Validate moviname
+     if(namee == "") {
+        printError("nameeErr", "Please enter your name");
+    } else {
+        var regex = /^[a-zA-Z\s]+$/;                
+        if(regex.test(name) === false) {
+            printError("nameeErr", "Please enter a movi name");
+        } else {
+            printError("nameeErr", "");
+            nameErr = false;
+        }
+    }
+    
+    // Validate city
+    if(city == "Select") {
+        printError("cityErr", "Please select your city");
+    } else {
+        printError("cityErr", "");
+        cityErr = false;
+    }
+     // movi time
+     if(time == "Select") {
+        printError("timeErr", "Please select movi time");
+    } else {
+        printError("timeErr", "");
+        timeErr = false;
+    }
+     // total amount
+     if(ticket == "") {
+        printError("ticketErr", "Please select your ticket number");
+    } else {
+        printError("ticketErr", "");
+        ticketErr = false;
+    }
+      // snaks
+      if(snaks== "") {
+        printError("snaksErr", "Please select your ticket number");
+    } else {
+        printError("snaksErr", "");
+        snaksErr = false;
+    }
+      // payment
+      if(payment == "") {
+        printError("paymentErr", "Please select your ticket number");
+    } else {
+        printError("paymentErr", "");
+        paymentErr = false;
+    }
+   
+    
+    // Prevent the form from being submitted if there are any errors
+    if((nameErr || emailErr || mobileErr || nameeErr || cityErr || timeErr||ticketErr||snaksErr||paymentErr ) == true) {
+       return false;
+    } else {
+        // Creating a string from input data for preview
+        var dataPreview = "You've entered the following details: \n" +
+                          "Full Name: " + name + "\n" +
+                          "Email Address: " + email + "\n" +
+                          "Mobile Number: " + mobile + "\n" +
+                          "Moviename: " + movie + "\n" +
+                          "City name: " + city + "\n";
+                          "Show Time: " + time+ "\n";
+                          "Total amount"+ticket+"\n";
+                          
+                          if(snaks.length) {
+            dataPreview += "snaks: " + snaks.join(", ");
+        }
+        if(payment.length) {
+            dataPreview += "payment: " + payment.join(", ");
+        }
+        // Display input data in a dialog box before submitting the form
+        alert(dataPreview);
+    }
+};
+var res=0,numone;
+function mult()
+            {
+                numone=parseInt(document.getElementById("one").value);
+                if(numone)
+                {
+                    res=numone*200;
+                    temp=document.getElementById("res");
+                    temp.style.display="block";
+                    document.getElementById("res").innerHTML="Multiplication:-"+res
+                }
+
+            }
+            
+</script>
+</head>
+<body>
+<form name="contactForm" onsubmit="return validateForm()" action="#" method="post">
+    <h2>MovieBooking Form</h2>
+    <div class="row">
+        <label>Full Name</label>
+        <input type="text" name="name">
+        <div class="error" id="nameErr"></div>
+    </div>
+    <div class="row">
+        <label>Email Address</label>
+        <input type="text" name="email">
+        <div class="error" id="emailErr"></div>
+    </div>
+    <div class="row">
+        <label>Mobile Number</label>
+        <input type="text" name="mobile" maxlength="10">
+        <div class="error" id="mobileErr"></div>
+    </div>
+    <div class="row">
+        <label>Movie Name</label>
+        <input type="text" name="namee">
+        <div class="error" id="nameeErr"></div>
+    </div>
+    <div class="row">
+        <label>City Name</label>
+        <select name="City">
+            <option>Select</option>
+            <option>Bhubaneswar</option>
+            <option>Cuttack</option>
+            <option>Rourkela</option>
+            <option>Berhampur</option>
+            <option>Puri</option>
+        </select>
+        <div class="error" id="cityErr"></div>
+    </div>
+    <div class="row">
+        <label>Show Time</label>
+        <select name="Time">
+            <option>Select</option>
+            <option>7.00am-10.00am</option>
+            <option>10.30.00am-1.30pm</option>
+            <option>3.30.00pm-5.30pm</option>
+            <option>6.00pm-9.00pm</option>
+        </select>
+        <div class="error" id="timeErr"></div>
+    </div>
+    <!-- <div class="row">
+        <label>Number of Ticket</label>
+        <input type="text" name="number" maxlength="1">
+        <div class="error" id="NumbereErr"></div>
+    </div> -->
+    <div class="row">
+   <label id="input">Enter number of Ticket:<input id="one"></label>
+    <h3><button onclick="mult()">TOTAL</button></h3>
+    <p id="res" style="display: none;"></p>
+    <div class="error" id="ticketErr"></div>
+    </div>
+    <div class="row">
+        <label>Movie Snaks<i>(Optional)</i></label>
+        <div class="form-inline">
+            <label><input type="checkbox" name="movie[]" value="snaks">Popcorn</label>
+            <label><input type="checkbox" name="movie[]" value="snaks">Cookies</label>
+            <label><input type="checkbox" name="movie[]" value="snaks">Pizza</label>
+        </div>
+        <div class="error" id="snaksErr"></div>
+    </div>
+    <div class="row">
+        <label>Payment type</label>
+        <div class="form-inline">
+        <label><input type="checkbox" name="payment[]" value="snaks">UPI</label>
+        <label><input type="checkbox" name="payment[]" value="snaks">CARD</label>
+        <label><input type="checkbox" name="payment[]" value="snaks">NETBANKING</label>
+        </div>
+        <div class="error" id="paymentErr"></div>
+    </div>
+    <div class="row">
+        <input type="submit" value="Pay now">
+    </div>
+</form>
+</body>
+</html>
